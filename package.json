@@ -1,0 +1,46 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "TypeScript Express Starter With TypeORM",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.7",
+    "@types/nodemailer": "^6.4.14",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "bcrypt": "^5.1.1",
+    "chalk": "^5.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.9.0",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.13",
+    "npm": "^10.6.0",
+    "pg": "^8.4.0",
+    "reflect-metadata": "^0.1.13",
+    "remove": "^0.1.5",
+    "typeorm": "0.3.20",
+    "zod": "^3.23.4"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node ./dist/src/index.js",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "generate": "typeorm migration:generate",
+    "migrate": "typeorm migration:run"
+  }
+}

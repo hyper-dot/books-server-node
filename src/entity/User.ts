@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+} from 'typeorm'
 import * as bcrypt from 'bcrypt'
 
 import { OTP } from './OTP'
+import { Product } from './Product'
 
 @Entity()
 export class User {
@@ -34,6 +41,12 @@ export class User {
 
   @OneToOne(() => OTP, (otp) => otp.user, { eager: true })
   otp: OTP
+
+  @OneToMany(() => Product, (product) => product.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  products: Product[]
 
   async validatePassword(password: string) {
     return await bcrypt.compare(password + this.salt, this.hash)

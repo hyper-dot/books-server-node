@@ -11,12 +11,12 @@ export const envSchema = z.object({
   REFRESH_TOKEN_SECRET: z.string(),
 
   // GOOGLE OAUTH
-  CLIENT_ID: z.string(),
-  CLIENT_SECRET: z.string(),
-  REDIRECT_URL: z.string().url(),
+  // CLIENT_ID: z.string(),
+  // CLIENT_SECRET: z.string(),
+  // REDIRECT_URL: z.string().url(),
 
   // Frontend url
-  CLIENT_URL: z.string().url(),
+  // CLIENT_URL: z.string().url(),
 })
 
 declare global {

@@ -17,7 +17,6 @@ dotenv.config()
 // Validate Schema
 try {
   envSchema.parse(process.env)
-  console.log(process.env)
 } catch (error) {
   console.error('Invalid environment variables:', error.errors)
   process.exit(1) // Exit the process if validation fails

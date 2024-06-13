@@ -20,4 +20,4 @@ router.get('/oauth', asyncWrapper(googleOauthGet))
 
 router.post('/refresh', asyncWrapper(refreshUserToken))
 
-export default router
+export { router as authRoutes }

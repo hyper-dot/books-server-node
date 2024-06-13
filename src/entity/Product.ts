@@ -23,4 +23,7 @@ export class Product {
 
   @ManyToOne(() => User, (user) => user.products)
   user: User
+
+  @Column({ default: Date.now() })
+  createdAt: Date
 }

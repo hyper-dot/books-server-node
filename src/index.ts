@@ -6,8 +6,10 @@ import * as cors from 'cors'
 
 import { envSchema } from './config/env'
 
-import auth from './routes/auth.route'
-import user from './routes/user.route'
+import { authRoutes } from './routes/auth.route'
+import { userRoutes } from './routes/user.route'
+import { supplierRoute } from './routes/supplier.route'
+import { productRoute } from './routes/product.route'
 
 import { CustomError, NotFoundError } from './utils/exceptions'
 import { AppDataSource } from './config/db'
@@ -43,8 +45,10 @@ app.use(
 )
 
 // ROUTES
-app.use('/auth', auth)
-app.use('/users', user)
+app.use('/auth', authRoutes)
+app.use('/users', userRoutes)
+app.use('/supplier', supplierRoute)
+app.use('/product', productRoute)
 
 // Not Found
 app.use('*', () => {

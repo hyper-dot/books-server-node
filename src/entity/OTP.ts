@@ -18,7 +18,4 @@ export class OTP {
   @OneToOne(() => User)
   @JoinColumn()
   user: User
-
-  @Column()
-  userId: number
 }

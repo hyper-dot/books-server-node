@@ -12,7 +12,7 @@ export class Purchase {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({ default: Date.now() })
+  @Column({ default: new Date(Date.now()) })
   createdAt: Date
 
   @Column()

@@ -25,6 +25,6 @@ export class Supplier {
   @OneToMany(() => Purchase, (purchase) => purchase.supplier)
   purchases: Purchase[]
 
-  @Column({ default: Date.now() })
+  @Column({ default: new Date(Date.now()) })
   createdAt: Date
 }

@@ -13,7 +13,7 @@ export async function sendOtp({ email, name, otp }) {
     from: '"Books" <rozanpoudel@gmail.com>',
     to: email,
     subject: 'OTP from Books',
-    html: `<div style="display: flex; flex-direction: column; width: 200px">
+    html: `<div style="width: 200px">
   <h1>Books</h1>
   <img
     src="https://static.scientificamerican.com/sciam/cache/file/1DDFE633-2B85-468D-B28D05ADAE7D1AD8_source.jpg?w=1200"
@@ -29,6 +29,8 @@ export async function sendOtp({ email, name, otp }) {
       >${otp}</strong
     >
   </p>
+
+  <p>Please keep this secret</p>
 </div>`,
   }
 

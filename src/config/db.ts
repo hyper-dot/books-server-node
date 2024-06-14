@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   url: 'postgres://roshanpaudel:@localhost:5432/mydb',
   ssl: process.env.ENV === 'development',
-  synchronize: process.env.ENV === 'development',
+  synchronize: true,
   entities: [User, OTP, Product, Purchase, PurchaseDetail, Supplier],
   migrations: [],
   subscribers: [],

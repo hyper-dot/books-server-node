@@ -8,4 +8,4 @@ import {
 import { User } from './User'
 
 @Entity()
-export class OTP {}
+export class Customer {}

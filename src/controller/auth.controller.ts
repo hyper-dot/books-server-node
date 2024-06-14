@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { userSchema } from '../schemas/user.schema'
+import { otpSchema, userSchema } from '../schemas/user.schema'
 import { BadRequestError, UnauthorizedError } from '../utils/exceptions'
-import { UserRepository } from '../../repositories'
+import { OTPRepo, UserRepository } from '../../repositories'
 import * as bcrypt from 'bcrypt'
 import { OAuth2Client } from 'google-auth-library'
 import { getUserData } from '../helpers/oauth.helper'
@@ -37,8 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
   // Generate token and refreshToken
   const refreshToken = getRefreshToken({ email })
-
-  const savedUser = await UserRepository.save({
+  const result = await UserRepository.save({
     name,
     hash,
     salt,
@@ -47,12 +46,12 @@ export const registerUser = async (req: Request, res: Response) => {
     refreshToken,
   })
 
-  const accessToken = getAccessToken({ name, email, id: savedUser.id })
+  const newOtp = OTPRepo.create({ user: result, otp: '123456' })
+  await OTPRepo.save(newOtp)
+  await sendOtp({ name, email, otp: 123456 })
 
   return res.status(200).json({
     message: 'User created successfully !!',
-    accessToken,
-    refreshToken,
   })
 }
 
@@ -60,6 +59,33 @@ export const registerUser = async (req: Request, res: Response) => {
 export const getAllUsers = async (_: Request, res: Response) => {
   const users = await UserRepository.find()
   return res.json(users)
+}
+
+// Get all userSchema
+export const verifyOTP = async (req: Request, res: Response) => {
+  const body = req.body
+  const parsedData = otpSchema.safeParse(body)
+  console.log(body)
+
+  if (!parsedData.success) throw new BadRequestError('Invalid data.')
+
+  const { email, otp } = parsedData.data
+  const user = await UserRepository.findOneBy({ email })
+
+  if (!user) throw new BadRequestError('User not found.')
+
+  const dbOtp = await OTPRepo.findOneBy({ user })
+  if (!dbOtp) throw new BadRequestError('OTP not found.')
+  if (otp !== dbOtp.otp) throw new BadRequestError('Invalid OTP.')
+
+  // Delete OTP
+  await OTPRepo.delete(dbOtp)
+
+  // VERIFY USER
+  user.verified = true
+  await UserRepository.save(user)
+
+  return res.json({ message: 'OTP verifed.' })
 }
 
 // LOGIN USER

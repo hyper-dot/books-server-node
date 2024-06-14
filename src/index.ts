@@ -34,6 +34,7 @@ const app = express()
 
 // Global Middlewares
 app.use(express.json())
+app.use(cors())
 app.use(morgan('tiny'))
 app.use(
   cors({
@@ -57,8 +58,8 @@ app.use('*', () => {
 
 // Default Error Handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  // console.log(err)
-  console.log('ERROR OCCURED: ', err.message)
+  console.log(err)
+  // console.log('ERROR OCCURED: ', err.message)
   if (err instanceof CustomError) {
     res.status(err.statusCode).json({ message: err.message })
   } else {

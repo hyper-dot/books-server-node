@@ -7,12 +7,14 @@ import {
   refreshUserToken,
   googleOauthPost,
   googleOauthGet,
+  verifyOTP,
 } from '../controller/auth.controller'
 
 const router = Router()
 
 router.get('/', asyncWrapper(getAllUsers))
 router.post('/register', asyncWrapper(registerUser))
+router.post('/otp', asyncWrapper(verifyOTP))
 router.post('/login', asyncWrapper(loginUser))
 
 router.post('/oauth', asyncWrapper(googleOauthPost))

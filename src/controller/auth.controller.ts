@@ -1,6 +1,10 @@
 import { Request, Response } from 'express'
 import { otpSchema, userSchema } from '../schemas/user.schema'
-import { BadRequestError, UnauthorizedError } from '../utils/exceptions'
+import {
+  BadRequestError,
+  UnauthorizedError,
+  ForbiddenError,
+} from '../utils/exceptions'
 import { OTPRepo, UserRepository } from '../../repositories'
 import * as bcrypt from 'bcrypt'
 import { OAuth2Client } from 'google-auth-library'
@@ -98,25 +102,27 @@ export const loginUser = async (req: Request, res: Response) => {
   if (!(await user.validatePassword(password)))
     throw new UnauthorizedError('Invalid email or password.')
 
+  if (!user.verified) throw new ForbiddenError('Please verify OTP first.')
+
   const payload = { id: user.id, email: user.email, picture: user.picture }
   const accessToken = getAccessToken(payload)
-  const refreshToken = getRefreshToken(payload)
 
-  return res.json({ user, accessToken, refreshToken })
+  return res.json({ user, accessToken })
 }
 
 // REFRESH TOKEN
-export const refreshUserToken = (req: Request, res: Response) => {
+export const refreshUserToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body
-  console.log('RECEIVED BODY', req.body)
+  console.log('REFRESH TOKEN', refreshToken)
+  if (!refreshToken) throw new BadRequestError('No refreshtoken provided !!')
 
-  if (!refreshToken) throw new BadRequestError()
+  const user = await UserRepository.findOneBy({ refreshToken })
+  if (!user) throw new UnauthorizedError('Invalid credentials !!')
 
-  const newRefreshToken = getRefreshToken({})
-  const newAccessToken = getAccessToken({})
+  const newAccessToken = getAccessToken({ id: user.id })
 
   return res.json({
-    refreshToken: newRefreshToken,
+    user,
     accessToken: newAccessToken,
   })
 }

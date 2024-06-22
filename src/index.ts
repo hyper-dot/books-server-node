@@ -24,6 +24,8 @@ try {
   process.exit(1) // Exit the process if validation fails
 }
 
+console.log(process.env.DB_URL)
+
 // Connnect to DB
 AppDataSource.initialize()
   .then(() => console.log('Connected to Database !!'))

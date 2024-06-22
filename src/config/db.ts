@@ -7,7 +7,11 @@ import { Supplier } from '../entity/Supplier'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url: 'postgres://roshanpaudel:@localhost:5432/mydb',
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: 'postgres',
+  // url: process.env.DB_URL,
   ssl: process.env.ENV === 'development',
   synchronize: true,
   entities: [User, OTP, Product, Purchase, PurchaseDetail, Supplier],

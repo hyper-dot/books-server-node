@@ -14,6 +14,4 @@ export const AppDataSource = new DataSource({
   ssl: process.env.ENV === 'development',
   synchronize: true,
   entities: [User, OTP, Product, Purchase, PurchaseDetail, Supplier],
-  migrations: [],
-  subscribers: [],
 })

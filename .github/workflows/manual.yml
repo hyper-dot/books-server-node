@@ -5,7 +5,15 @@ on:
 name: 🚀 Deploy website on push
 
 env:
-  DB_URL: ${{vars.NEXT_PUBLIC_BACKEND_URL}}
+  DB_URL: ${{vars.DB_URL}}
+  PORT: ${{vars.DB_URL}}
+  JWT_SECRET: ${{vars.JWT_SECRET}}
+  REFRESH_TOKEN_SECRET: ${{vars.REFRESH_TOKEN_SECRET}}
+  JWT_EXPIRES_IN: ${{vars.JWT_EXPIRES_IN}}
+  REFRESH_TOKEN_EXPIRES_IN: ${{vars.REFRESH_TOKEN_EXPIRES_IN}}
+  NODEMAILER_HOST: ''
+  NODEMAILER_USER: ''
+  NODEMAILER_PASS: ''
 
 jobs:
   web-deploy:

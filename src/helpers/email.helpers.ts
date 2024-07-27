@@ -1,7 +1,6 @@
 import * as nodemailer from 'nodemailer'
 let transporter = nodemailer.createTransport({
-  host: process.env.NODEMAILER_HOST,
-  port: 465,
+  service: 'gmail',
   auth: {
     user: process.env.NODEMAILER_AUTH_USER,
     pass: process.env.NODEMAILER_AUTH_PASS,
@@ -11,13 +10,13 @@ let transporter = nodemailer.createTransport({
 export async function sendOtp({ email, name, otp }) {
   // Setup email data
   let mailOptions = {
-    from: '"Books" <noreply@books.com>',
+    from: '"EZ Books" <noreply@books.com>',
     to: email,
     subject: 'OTP from Books',
     html: `<div style="width: 200px">
-  <h1>Books</h1>
+  <h1>EZ Books</h1>
   <img
-    src="https://books.rosanpaudel.com.np/logo.svg"
+    src="https://books.rosanpaudel.com.np/logo.png"
     alt="books"
     width="100"
     height="100"

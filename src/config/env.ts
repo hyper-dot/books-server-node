@@ -6,7 +6,6 @@ export const envSchema = z.object({
   JWT_SECRET: z.string(),
   REFRESH_TOKEN_SECRET: z.string(),
 
-  NODEMAILER_HOST: z.string(),
   NODEMAILER_AUTH_USER: z.string(),
   NODEMAILER_AUTH_PASS: z.string(),
 

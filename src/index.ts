@@ -59,7 +59,7 @@ app.use('*', () => {
 // Default Error Handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log(err)
-  // console.log('ERROR OCCURED: ', err.message)
+  console.log('ERROR OCCURED: ', err.message)
   if (err instanceof CustomError) {
     res.status(err.statusCode).json({ message: err.message })
   } else {

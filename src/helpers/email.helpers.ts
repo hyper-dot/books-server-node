@@ -11,17 +11,16 @@ let transporter = nodemailer.createTransport({
 export async function sendOtp({ email, name, otp }) {
   // Setup email data
   let mailOptions = {
-    from: '"Books" <books@books.com>',
+    from: '"Books" <noreply@books.com>',
     to: email,
     subject: 'OTP from Books',
     html: `<div style="width: 200px">
   <h1>Books</h1>
   <img
-    src="https://static.scientificamerican.com/sciam/cache/file/1DDFE633-2B85-468D-B28D05ADAE7D1AD8_source.jpg?w=1200"
+    src="https://books.rosanpaudel.com.np/logo.svg"
     alt="books"
     width="100"
     height="100"
-    style="border: 1px solid gray; border-radius: 10px"
   />
   <p>Dear ${name},</p>
   <p>

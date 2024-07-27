@@ -113,7 +113,6 @@ export const loginUser = async (req: Request, res: Response) => {
 // REFRESH TOKEN
 export const refreshUserToken = async (req: Request, res: Response) => {
   const { refreshToken } = req.body
-  console.log('REFRESH TOKEN', refreshToken)
   if (!refreshToken) throw new BadRequestError('No refreshtoken provided !!')
 
   const user = await UserRepository.findOneBy({ refreshToken })

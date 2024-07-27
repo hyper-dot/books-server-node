@@ -1,0 +1,22 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: books-server-node
+    src: ./
+    engine: nodejs16
+    primary: true
+    public: true
+    commands:
+      - npm run build
+    dev: npm run dev
+    run: node dist/src/index.js
+    presets:
+      env:
+        - name: DB_URL
+        - name: JWT_SECRET
+        - name: REFRESH_TOKEN_SECRET
+        - name: REFRESH_TOKEN_EXPIRES_IN
+        - name: JWT_EXPIRES_IN
+        - name: NODEMAILER_HOST
+        - name: NODEMAILER_AUTH_USER
+        - name: NODEMAILER_AUTH_PASS

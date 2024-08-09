@@ -50,6 +50,7 @@ app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
 app.use('/supplier', supplierRoute)
 app.use('/product', productRoute)
+app.get('/test', (_, res) => res.send('OK'))
 
 // Not Found
 app.use('*', () => {

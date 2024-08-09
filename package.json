@@ -27,6 +27,7 @@
     "google-auth-library": "^9.9.0",
     "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
+    "kaokun": "^1.1.10",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.13",
     "npm": "^10.6.0",

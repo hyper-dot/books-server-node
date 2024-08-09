@@ -3,7 +3,6 @@ import * as dotenv from 'dotenv'
 import * as express from 'express'
 import * as morgan from 'morgan'
 import * as cors from 'cors'
-import * as kaokun from 'kaokun'
 
 import { envSchema } from './config/env'
 
@@ -51,7 +50,7 @@ app.use('/auth', authRoutes)
 app.use('/users', userRoutes)
 app.use('/supplier', supplierRoute)
 app.use('/product', productRoute)
-app.get('/test', (_, res) => res.send(kaokun.fun()))
+app.get('/ok', (_, res) => res.send('ok'))
 
 // Not Found
 app.use('*', () => {

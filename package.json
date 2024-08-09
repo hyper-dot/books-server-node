@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "0.0.1",
-  "description": "TypeScript Express Starter With TypeORM",
+  "description": "Typescript Server",
   "type": "commonjs",
   "devDependencies": {
     "@types/chalk": "^2.2.0",

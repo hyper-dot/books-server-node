@@ -3,11 +3,11 @@ import { User } from './User'
 
 @Entity()
 export class Product {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number
 
   @Column()
-  batch_no: number
+  batch_no: string
 
   @Column()
   qty: number

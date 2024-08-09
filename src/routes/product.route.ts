@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import { asyncWrapper } from '../utils/wrapper'
 import { authMiddleware } from '../middleware/auth.middleware'
+import { productSchema } from '../schemas/product.schema'
+import { addProduct } from '../controller/product.controller'
 
 const router = Router()
 
@@ -10,12 +12,6 @@ const router = Router()
  * 3. I need to implement authmiddleware since there is user involved
  * */
 
-router.post(
-  '/product',
-  asyncWrapper((req, res) => {
-    const body = req.body
-    return res.json(body)
-  }),
-)
+router.post('/', asyncWrapper(addProduct))
 
 export { router as productRoute }

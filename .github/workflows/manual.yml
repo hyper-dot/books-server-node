@@ -30,10 +30,10 @@ jobs:
           target: ${{secrets.TARGET}}
           
 
-      - name: ♻️ Restart the server
+      - name: ♻️ Restart the servers
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script : cd ${{secrets.TARGET}} && npm install && touch ${{secrets.RESTART}}
+          script : ${{secrets.ENV}} && npm install && touch ${{secrets.RESTART}}

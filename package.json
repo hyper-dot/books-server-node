@@ -4,6 +4,7 @@
   "description": "Typescript Server",
   "type": "commonjs",
   "devDependencies": {
+    "@eslint/js": "^9.9.0",
     "@types/chalk": "^2.2.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
@@ -15,11 +16,13 @@
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
     "eslint": "^9.8.0",
+    "globals": "^15.9.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "ts-node": "10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "typescript-eslint": "^8.0.1"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -44,6 +47,7 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
     "start": "node ./dist/src/index.js",
     "typeorm": "typeorm-ts-node-commonjs",
     "generate": "typeorm migration:generate",

@@ -1,5 +1,5 @@
 import * as nodemailer from 'nodemailer'
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.NODEMAILER_AUTH_USER,
@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
 
 export async function sendOtp({ email, name, otp }) {
   // Setup email data
-  let mailOptions = {
+  const mailOptions = {
     from: '"EZ Books" <noreply@books.com>',
     to: email,
     subject: 'OTP from Books',

@@ -1,8 +1,8 @@
-import { Router } from 'express'
-import { asyncWrapper } from '../utils/wrapper'
-import { authMiddleware } from '../middleware/auth.middleware'
+import { Router } from 'express';
+import { asyncWrapper } from '../utils/wrapper';
+// import { authMiddleware } from '../middleware/auth.middleware'
 
-const router = Router()
+const router = Router();
 
 /* TODO:
  * 1. First I have to create a supplier
@@ -13,9 +13,9 @@ const router = Router()
 router.post(
   '/',
   asyncWrapper((req, res) => {
-    const body = req.body
-    return res.json(body)
+    const body = req.body;
+    return res.json(body);
   }),
-)
+);
 
-export { router as supplierRoute }
+export { router as supplierRoute };

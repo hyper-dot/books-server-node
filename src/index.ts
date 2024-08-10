@@ -1,41 +1,41 @@
-import { Response, Request, NextFunction } from 'express'
-import * as dotenv from 'dotenv'
-import * as express from 'express'
-import * as morgan from 'morgan'
-import * as cors from 'cors'
+import { Response, Request, NextFunction } from 'express';
+import * as dotenv from 'dotenv';
+import * as express from 'express';
+import * as morgan from 'morgan';
+import * as cors from 'cors';
 
-import { envSchema } from './config/env'
+import { envSchema } from './config/env';
 
-import { authRoutes } from './routes/auth.route'
-import { userRoutes } from './routes/user.route'
-import { supplierRoute } from './routes/supplier.route'
-import { productRoute } from './routes/product.route'
+import { authRoutes } from './routes/auth.route';
+import { userRoutes } from './routes/user.route';
+import { supplierRoute } from './routes/supplier.route';
+import { productRoute } from './routes/product.route';
 
-import { CustomError, NotFoundError } from './utils/exceptions'
-import { AppDataSource } from './config/db'
+import { CustomError, NotFoundError } from './utils/exceptions';
+import { AppDataSource } from './config/db';
 
-dotenv.config()
+dotenv.config();
 
 // Validate Schema
 try {
-  envSchema.parse(process.env)
+  envSchema.parse(process.env);
 } catch (error) {
-  console.error('Invalid environment variables:', error.errors)
-  process.exit(1) // Exit the process if validation fails
+  console.error('Invalid environment variables:', error.errors);
+  process.exit(1); // Exit the process if validation fails
 }
 
 // Connnect to DB
 AppDataSource.initialize()
   .then(() => console.log('Connected to Database !!'))
-  .catch((err) => console.log(err))
+  .catch((err) => console.log(err));
 
 // APP Initialization
-const app = express()
+const app = express();
 
 // Global Middlewares
-app.use(express.json())
-app.use(cors())
-app.use(morgan('tiny'))
+app.use(express.json());
+app.use(cors());
+app.use(morgan('tiny'));
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -43,32 +43,33 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }),
-)
+);
 
 // ROUTES
-app.use('/auth', authRoutes)
-app.use('/users', userRoutes)
-app.use('/supplier', supplierRoute)
-app.use('/product', productRoute)
-app.get('/ok', (_, res) => res.send('ok'))
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/supplier', supplierRoute);
+app.use('/product', productRoute);
+app.get('/ok', (_, res) => res.send('ok'));
 
 // Not Found
 app.use('*', () => {
-  throw new NotFoundError()
-})
+  throw new NotFoundError();
+});
 
 // Default Error Handler
+/* eslint-disable */
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err)
-  console.log('ERROR OCCURED: ', err.message)
+  console.log(err);
+  console.log('ERROR OCCURED: ', err.message);
   if (err instanceof CustomError) {
-    res.status(err.statusCode).json({ message: err.message })
+    res.status(err.statusCode).json({ message: err.message });
   } else {
     // Handle non-custom errors
-    res.status(500).json({ message: err.message || 'Internal Server Error' })
+    res.status(500).json({ message: err.message || 'Internal Server Error' });
   }
-})
+});
 
 app.listen(process.env.PORT || 8080, () =>
   console.log('App Listening to port 8080'),
-)
+);

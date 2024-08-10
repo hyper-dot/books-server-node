@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 export const envSchema = z.object({
   DB_URL: z.string(),
 
@@ -16,8 +16,9 @@ export const envSchema = z.object({
 
   // Frontend url
   // CLIENT_URL: z.string().url(),
-})
+});
 
+/* eslint-disable */
 declare global {
   namespace NodeJS {
     interface ProcessEnv extends z.infer<typeof envSchema> {}

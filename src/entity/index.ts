@@ -1,6 +1,0 @@
-export * from './User'
-export * from './OTP'
-export * from './Product'
-export * from './Customer'
-export * from './Supplier'
-export * from './Purchase'

@@ -25,7 +25,7 @@
  *   post:
  *     summary: Register a new user
  *     description: Registers a new user with name, email, and password.
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:

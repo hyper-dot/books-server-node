@@ -1,17 +1,10 @@
 /**
  * @swagger
- * tags:
- *   name: OTP
- *   description: API for otp
- */
-
-/**
- * @swagger
  * /otp/verify:
  *   post:
  *     summary: Verify OTP
  *     description: Verifies the OTP for the user based on email address.
- *     tags: [OTP]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -30,23 +23,37 @@
  *             - otp
  *     responses:
  *       200:
- *         description: OTP verified successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "OTP verified successfully."
+ *         $ref: '#/components/responses/200'
  *       400:
- *         description: Bad request due to invalid input.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: "Email and OTP are required."
+ *         $ref: '#/components/responses/400'
+ *       500:
+ *         $ref: '#/components/responses/500'
+ */
+
+/**
+ * @swagger
+ * /otp/regenerate:
+ *   post:
+ *     summary: Regenerate OTP
+ *     description: Regenerates and sends a new OTP to the user's email address. User must wait 2 minutes between OTP requests.
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "user@example.com"  # Request example
+ *           required:
+ *             - email
+ *     responses:
+ *       200:
+ *         $ref: '#/components/responses/200'
+ *       400:
+ *         $ref: '#/components/responses/400'
+ *       500:
+ *         $ref: '#/components/responses/500'
  */

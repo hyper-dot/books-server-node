@@ -4,7 +4,7 @@ export class OTPService {
   // Generate a new OTP
   public async generateOTP(userId: string): Promise<string | null> {
     const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
-    const expiresAt = new Date(Date.now() + 2 * 60 * 1000); // OTP valid for 2 minutes
+    const expiresAt = new Date(Date.now() + 1 * 50 * 1000);
 
     const otpDocument: IOTP = new OTPModel({
       userId,

@@ -1,6 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'; // For password hashing
-import { BadRequestError, UnauthorizedError } from '../../utils/exceptions';
+import {
+  BadRequestError,
+  ForbiddenError,
+  UnauthorizedError,
+} from '../../utils/exceptions';
+import UserModel from '../user/user.model';
 
 type User = {
   id: string;
@@ -76,5 +81,42 @@ export class AuthService {
     hashedPassword: string,
   ): Promise<boolean> {
     return bcrypt.compare(plainPassword, hashedPassword);
+  }
+
+  async login({ email, password }: { email: string; password: string }) {
+    // Check if email and password are provided
+    if (!email || !password) {
+      throw new BadRequestError('Email and password are required');
+    }
+
+    // Fetch the user by email
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      throw new UnauthorizedError('Invalid credentials');
+    }
+
+    if (!user.isVerified) throw new ForbiddenError('You must verify otp first');
+
+    // Compare the plain password with the hashed password in the database
+    const isPasswordValid = await this.comparePassword(password, user.hash);
+    if (!isPasswordValid) {
+      throw new UnauthorizedError('Invalid credentials');
+    }
+
+    // Generate access token
+    const accessToken = this.generateAccessToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
+
+    // Return the generated tokens
+    return {
+      message: 'Login successful',
+      data: {
+        accessToken,
+        refreshToken: user.refreshToken,
+      },
+    };
   }
 }

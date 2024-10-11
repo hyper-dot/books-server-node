@@ -12,6 +12,7 @@ import userRoutes from './user/user.route';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerConfig } from '../configs/swagger';
 import { otpRoutes } from './otp/opt.route';
+import { authRoutes } from './auth/auth.routes';
 
 export class App {
   public app: Application;
@@ -35,6 +36,7 @@ export class App {
 
   private setRoutes() {
     this.app.use('/user', userRoutes);
+    this.app.use('/auth', authRoutes);
     this.app.use('/otp', otpRoutes);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
   }

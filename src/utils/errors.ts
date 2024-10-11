@@ -2,12 +2,11 @@ import { CustomError } from './exceptions';
 
 export function handleError(err: Error): {
   statusCode: number;
-  message: string;
+  error: string;
 } {
   if (err instanceof CustomError) {
-    return { statusCode: err.statusCode, message: err.message };
+    return { statusCode: err.statusCode, error: err.message };
   } else {
-    console.error(err);
-    return { statusCode: 500, message: 'Internal Server Error' };
+    return { statusCode: 500, error: 'Internal Server Error' };
   }
 }

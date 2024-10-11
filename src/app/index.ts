@@ -1,10 +1,16 @@
 import express, { Application, Response, Request, NextFunction } from 'express';
-import { connectDatabase } from './configs';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 
-import { NotFoundError } from './utils/exceptions';
-import { handleError } from './utils/errors';
+import { NotFoundError } from '../utils/exceptions';
+import { handleError } from '../utils/errors';
+import { connectDatabase } from '../configs/db';
+
+import userRoutes from './user/user.route';
+
+// Documentation
+import swaggerUi from 'swagger-ui-express';
+import { swaggerConfig } from '../configs/swagger';
 
 export class App {
   public app: Application;
@@ -26,7 +32,10 @@ export class App {
     this.app.use(morgan('dev'));
   }
 
-  private setRoutes() {}
+  private setRoutes() {
+    this.app.use('/user', userRoutes);
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+  }
 
   private handleErrors() {
     this.app.get('*', () => {
@@ -36,8 +45,8 @@ export class App {
     this.app.use(
       //eslint-disable-next-line
       (err: Error, req: Request, res: Response, next: NextFunction) => {
-        const { statusCode, message } = handleError(err);
-        res.status(statusCode).json({ message });
+        const { statusCode, error } = handleError(err);
+        res.status(statusCode).json({ error });
       },
     );
   }

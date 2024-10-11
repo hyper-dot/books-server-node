@@ -15,10 +15,8 @@ export class AuthService {
   private refreshTokenExpiry: string;
 
   constructor() {
-    this.accessTokenSecret =
-      process.env.ACCESS_TOKEN_SECRET || 'your_access_token_secret';
-    this.refreshTokenSecret =
-      process.env.REFRESH_TOKEN_SECRET || 'your_refresh_token_secret';
+    this.accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+    this.refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
     this.accessTokenExpiry = '15m';
     this.refreshTokenExpiry = '7d';
   }

@@ -1,12 +1,19 @@
 import { BadRequestError } from '../../utils/exceptions';
 import { AuthService } from '../auth/auth.service';
+import { EmailService } from '../email/email.service';
+import OTPService from '../otp/otp.service';
 import UserModel from './user.model';
 import { TUserSchema, userSchema } from './user.schema';
 
 export default class UserService {
   private authService: AuthService;
+  private emailService: EmailService;
+  private OTPService: OTPService;
+
   constructor() {
     this.authService = new AuthService();
+    this.emailService = new EmailService();
+    this.OTPService = new OTPService();
   }
 
   async addUser(payload: TUserSchema) {
@@ -27,8 +34,15 @@ export default class UserService {
 
     // Add hashed password to the user
     newUser.hash = await this.authService.hashPassword(data.password);
-    await newUser.save();
 
+    const otp = await this.OTPService.generateOTP(newUser._id.toString());
+    await this.emailService.sendEmail(
+      data.email,
+      'OTP code for Ez Books',
+      `Your OTP code for ez books is ${otp}`,
+    );
+
+    await newUser.save();
     return { message: 'User created successfully' };
   }
 }

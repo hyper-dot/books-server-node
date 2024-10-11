@@ -1,6 +1,6 @@
 import express, { Application, Response, Request, NextFunction } from 'express';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
+import cors from 'cors';
 
 import { NotFoundError } from '../utils/exceptions';
 import { handleError } from '../utils/errors';
@@ -11,11 +11,11 @@ import userRoutes from './user/user.route';
 // Documentation
 import swaggerUi from 'swagger-ui-express';
 import { swaggerConfig } from '../configs/swagger';
+import { otpRoutes } from './otp/opt.route';
 
 export class App {
   public app: Application;
   constructor() {
-    dotenv.config();
     this.app = express();
     this.connectdb();
     this.setMiddleware();
@@ -30,10 +30,12 @@ export class App {
   private setMiddleware() {
     this.app.use(express.json());
     this.app.use(morgan('dev'));
+    this.app.use(cors());
   }
 
   private setRoutes() {
     this.app.use('/user', userRoutes);
+    this.app.use('/otp', otpRoutes);
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
   }
 

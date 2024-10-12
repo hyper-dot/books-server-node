@@ -35,6 +35,11 @@ export class App {
   }
 
   private setRoutes() {
+    this.app.use('*', (req, res, next) => {
+      console.log('BODY', req.body);
+      console.log('QUERY', req.query);
+      next();
+    });
     this.app.use('/user', userRoutes);
     this.app.use('/auth', authRoutes);
     this.app.use('/otp', otpRoutes);

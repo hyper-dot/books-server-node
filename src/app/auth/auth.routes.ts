@@ -11,6 +11,7 @@ class AuthRoutes {
 
   mountRoutes() {
     this.router.post('/login', this.constroller.login);
+    this.router.post('/refresh', this.constroller.refresh);
   }
 }
 

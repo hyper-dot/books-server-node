@@ -11,4 +11,13 @@ export class AuthController {
     const response = await this.service.login(req.body);
     return res.json(response);
   });
+
+  refresh = asyncWrapper(async (req, res) => {
+    const { refreshToken } = req.body;
+    const accessToken = this.service.refreshAccessToken(refreshToken);
+    return res.json({
+      message: 'Token refreshed successfully',
+      data: { accessToken },
+    });
+  });
 }

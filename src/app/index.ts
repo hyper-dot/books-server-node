@@ -13,6 +13,8 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerConfig } from '../configs/swagger';
 import { otpRoutes } from './otp/opt.route';
 import { authRoutes } from './auth/auth.routes';
+import productRoutes from './sales/product/product.routes';
+import { isAuthencticated } from '../middleware';
 
 export class App {
   public app: Application;
@@ -35,22 +37,23 @@ export class App {
   }
 
   private setRoutes() {
-    this.app.use('/user', userRoutes);
-    this.app.use('/auth', authRoutes);
-    this.app.use('/otp', otpRoutes);
-
     if (process.env.ENV === 'development') {
-      this.app.use('*', (req, res, next) => {
+      this.app.use('*', (req, _, next) => {
         console.log('BODY', req.body);
         console.log('QUERY', req.query);
         next();
       });
+      this.app.use('/user', userRoutes);
+      this.app.use('/auth', authRoutes);
+      this.app.use('/otp', otpRoutes);
+      this.app.use('/product', isAuthencticated, productRoutes);
+
       this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
     }
   }
 
   private handleErrors() {
-    this.app.get('*', () => {
+    this.app.use('*', () => {
       throw new NotFoundError();
     });
 

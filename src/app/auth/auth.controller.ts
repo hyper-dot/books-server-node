@@ -15,6 +15,7 @@ export class AuthController {
   refresh = asyncWrapper(async (req, res) => {
     const { refreshToken } = req.body;
     const accessToken = this.service.refreshAccessToken(refreshToken);
+
     return res.json({
       message: 'Token refreshed successfully',
       data: { accessToken },

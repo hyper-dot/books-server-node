@@ -7,7 +7,6 @@ export function handleError(err: Error): {
   if (err instanceof CustomError) {
     return { statusCode: err.statusCode, error: err.message };
   } else {
-    console.log(err);
     return { statusCode: 500, error: 'Internal Server Error' };
   }
 }

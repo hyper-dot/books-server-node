@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'; // For password hashing
+import bcrypt from 'bcryptjs';
 import {
   BadRequestError,
   ForbiddenError,
@@ -36,7 +36,7 @@ export class AuthService {
 
   generateRefreshToken(user: User) {
     return jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       this.refreshTokenSecret,
       { expiresIn: this.refreshTokenExpiry },
     );
@@ -60,13 +60,14 @@ export class AuthService {
 
   refreshAccessToken(refreshToken: string) {
     try {
-      const decoded: any = this.verifyRefreshToken(refreshToken);
+      const user: any = this.verifyRefreshToken(refreshToken);
       return this.generateAccessToken({
-        id: decoded.id,
-        email: decoded.email,
-        role: decoded.role || 'user',
+        id: user.id,
+        email: user.email,
+        role: user.role || 'user',
       });
     } catch (err) {
+      console.log(err);
       throw new BadRequestError('Could not refresh access token');
     }
   }

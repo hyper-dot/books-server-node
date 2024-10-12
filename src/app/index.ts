@@ -43,7 +43,10 @@ export class App {
     this.app.use('/user', userRoutes);
     this.app.use('/auth', authRoutes);
     this.app.use('/otp', otpRoutes);
-    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+
+    if (process.env.ENV === 'development') {
+      this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+    }
   }
 
   private handleErrors() {

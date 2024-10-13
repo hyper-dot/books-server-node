@@ -9,7 +9,8 @@ export class ProductController {
   }
 
   addnewProduct = asyncWrapper(async (req, res) => {
-    await this.service.addNewProduct(req.body);
+    const user = req.userId;
+    await this.service.addNewProduct(req.body, user);
     return res.json({ message: 'Product created successfully' });
   });
 }

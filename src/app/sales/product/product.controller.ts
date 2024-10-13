@@ -13,4 +13,10 @@ export class ProductController {
     await this.service.addNewProduct(req.body, user);
     return res.json({ message: 'Product created successfully' });
   });
+
+  getAllProducts = asyncWrapper(async (req, res) => {
+    const user = req.userId;
+    const data = await this.service.getAllProducts(user);
+    return res.json({ message: 'Products fetched successfully', data });
+  });
 }

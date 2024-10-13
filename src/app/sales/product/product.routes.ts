@@ -13,6 +13,7 @@ class ProductRouter {
   }
 
   mountRoutes() {
+    this.router.get('/', this.controller.getAllProducts);
     this.router.post('/', this.controller.addnewProduct);
   }
 }

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from './user.controller';
+import { isAuthencticated } from '../../middleware';
 
 class UserRoutes {
   public router: Router;
@@ -14,6 +15,7 @@ class UserRoutes {
 
   mountRoutes() {
     this.router.post('/', this.controller.addUser);
+    this.router.get('/my-data', isAuthencticated, this.controller.getMyData);
   }
 }
 

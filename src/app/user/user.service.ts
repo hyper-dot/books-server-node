@@ -45,4 +45,8 @@ export default class UserService {
     await newUser.save();
     return { message: 'User created successfully' };
   }
+
+  async getUserData(id: string) {
+    return await UserModel.findById(id).select('name role email');
+  }
 }

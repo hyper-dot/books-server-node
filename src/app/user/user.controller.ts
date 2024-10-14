@@ -12,4 +12,9 @@ export default class UserController {
     const response = await this.service.addUser(req.body);
     return res.status(201).json(response);
   });
+
+  getMyData = asyncWrapper(async (req, res) => {
+    const data = await this.service.getUserData(req.userId);
+    return res.json({ data });
+  });
 }

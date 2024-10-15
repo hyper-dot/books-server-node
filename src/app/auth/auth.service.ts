@@ -92,6 +92,8 @@ export class AuthService {
 
     // Fetch the user by email
     const user = await UserModel.findOne({ email });
+
+    console.log(user);
     if (!user) {
       throw new UnauthorizedError('Invalid credentials');
     }
@@ -114,6 +116,12 @@ export class AuthService {
     // Return the generated tokens
     return {
       message: 'Login successful',
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
       data: {
         accessToken,
         refreshToken: user.refreshToken,

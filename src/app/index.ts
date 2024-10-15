@@ -15,6 +15,7 @@ import { otpRoutes } from './otp/opt.route';
 import { authRoutes } from './auth/auth.routes';
 import productRoutes from './sales/product/product.routes';
 import { isAuthencticated } from '../middleware';
+import customerRoutes from './sales/customer/customer.route';
 
 export class App {
   public app: Application;
@@ -41,6 +42,7 @@ export class App {
     this.app.use('/auth', authRoutes);
     this.app.use('/otp', otpRoutes);
     this.app.use('/product', isAuthencticated, productRoutes);
+    this.app.use('/customer', isAuthencticated, customerRoutes);
     if ((process.env.ENV = 'development')) {
       this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
     }

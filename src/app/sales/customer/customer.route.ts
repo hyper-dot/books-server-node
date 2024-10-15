@@ -10,6 +10,7 @@ export class CustomerRoute {
     this.mountRoutes();
   }
   mountRoutes() {
+    this.router.get('/', this.controller.getAllCustomers);
     this.router.post('/', this.controller.addNewCustomer);
   }
 }

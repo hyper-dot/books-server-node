@@ -61,14 +61,15 @@ export class AuthService {
   refreshAccessToken(refreshToken: string) {
     try {
       const user: any = this.verifyRefreshToken(refreshToken);
-      return this.generateAccessToken({
+      const token = this.generateAccessToken({
         id: user.id,
         email: user.email,
         role: user.role || 'user',
       });
+      console.log('TOKEN', token);
+      return token;
     } catch (err) {
-      console.log(err);
-      throw new BadRequestError('Could not refresh access token');
+      throw new BadRequestError(err);
     }
   }
 
